@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 import { useState } from "react";
 
+import Chart from "@/components/Chart";
+import Error from "@/components/Error";
+import Loader from "@/components/Loader";
 import { IntensityResponse } from "@/networking/requests";
 
 export type TimeRange = {
@@ -37,6 +40,15 @@ export default function Home() {
           {timeRange.start.toLocaleString(DateTime.DATETIME_MED)} -{" "}
           {timeRange.end.toLocaleString(DateTime.DATETIME_MED)}
         </p>
+        <div className="pt-8">
+          {isPending ? (
+            <Loader />
+          ) : error || "error" in data ? (
+            <Error error={error} />
+          ) : (
+            <Chart data={data} />
+          )}
+        </div>
       </div>
     </main>
   );
