@@ -6,20 +6,20 @@ import { ClientProvider } from "@/components/QueryProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Carbon App",
-  description: "Carbon App",
+    title: "Carbon App",
+    description: "Carbon App",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <ClientProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ClientProvider>
-  );
+    return (
+        <ClientProvider>
+            <html lang="en">
+                <body className={inter.className}>{children}</body>
+            </html>
+        </ClientProvider>
+    );
 }

@@ -1,6 +1,6 @@
 {
-  "trailingComma": "all",
-  "quoteProps": "preserve",
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindFunctions": ["clsx"]
+    "trailingComma": "all",
+    "quoteProps": "preserve",
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "tailwindFunctions": ["clsx"]
 }
