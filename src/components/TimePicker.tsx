@@ -8,9 +8,12 @@ type TimePickerProps = {
 
     /** The value that is currently selected. */
     value: DateTime;
+
+    /** The minimum date that must be selected */
+    minDate?: DateTime;
 };
 
-const TimePicker = ({ value, onChange }: TimePickerProps) => {
+const TimePicker = ({ value, minDate, onChange }: TimePickerProps) => {
     const [time, setTime] = React.useState<DateTime>(value);
 
     useEffect(() => {
@@ -19,8 +22,10 @@ const TimePicker = ({ value, onChange }: TimePickerProps) => {
 
     return (
         <DateTimePicker
+            disableClock
             onChange={(value) => value && onChange(DateTime.fromJSDate(value))}
             value={time.toJSDate()}
+            {...(minDate && { minDate: minDate.toJSDate() })}
         />
     );
 };
