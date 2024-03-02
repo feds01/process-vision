@@ -5,10 +5,13 @@ import {
     LineController,
     CategoryScale,
     LinearScale,
+    TimeScale,
+    TimeSeriesScale,
     PointElement,
     LineElement,
     Legend,
     Title,
+    Tooltip,
 } from "chart.js";
 import { DateTime } from "luxon";
 
@@ -16,10 +19,13 @@ Chart.register(
     LineController,
     CategoryScale,
     LinearScale,
+    TimeScale,
     PointElement,
     LineElement,
+    TimeSeriesScale,
     Legend,
     Title,
+    Tooltip,
 );
 
 type ChartProps = {
@@ -43,11 +49,16 @@ const ChartRenderer = ({ data, size = 600 }: ChartProps) => {
         const chart = new Chart(ctx, {
             type: "line",
             data: {
-                // TODO: use zod transformer
                 labels: data.data.map((point) =>
-                    DateTime.fromISO(point.from).toLocaleString(
-                        DateTime.TIME_SIMPLE,
-                    ),
+                    // NOTE: Ideally, we'd use a time scale here, but it seems awkward to configure in order
+                    // to show dates that are human readable when larger time ranges are selected.
+                    DateTime.fromISO(point.from, {zone: 'utc'}).toLocaleString({
+                        weekday: "short",
+                        month: "short",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                    }),
                 ),
                 datasets: [
                     {
@@ -67,14 +78,51 @@ const ChartRenderer = ({ data, size = 600 }: ChartProps) => {
                 ],
             },
             options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Time",
+                            font: {
+                                family: "Roboto, sans-serif",
+                            },
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Carbon intensity",
+                            font: {
+                                family: "Roboto, sans-serif",
+                            },
+                        },
+                    },
+                },
                 plugins: {
                     title: {
                         display: true,
                         text: "Carbon intensity",
+                        font: {
+                            family: "Roboto, sans-serif",
+                        },
                     },
                     legend: {
                         display: true,
                         position: "top",
+                        labels: {
+                            font: {
+                                family: "Roboto, sans-serif",
+                            },
+                        },
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const label = context.dataset.label || "";
+                                const value = context.parsed.y || "";
+                                return `${label}: ${value} gCO2/kWh`;
+                            },
+                        },
                     },
                 },
             },
