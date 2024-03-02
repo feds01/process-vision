@@ -7,17 +7,11 @@ import { useEffect, useState } from "react";
 import Chart from "@/components/Chart";
 import Error from "@/components/Error";
 import Loader from "@/components/Loader";
-import { IntensityResponse } from "@/networking/requests";
+import { IntensityResponse, TimeRange, fetchIntensity } from "@/networking/requests";
 import TimePicker from "@/components/TimePicker";
 
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
-import "react-clock/dist/Clock.css";
-
-export type TimeRange = {
-    start: DateTime;
-    end: DateTime;
-};
 
 export default function Home() {
     const [isClient, setIsClient] = useState(false);
@@ -33,10 +27,7 @@ export default function Home() {
 
     const { isPending, error, data } = useQuery<IntensityResponse>({
         queryKey: ["carbon-intensity", timeRange],
-        queryFn: () =>
-            fetch(
-                `https://api.carbonintensity.org.uk/intensity/${timeRange.start.toISO()}/${timeRange.end.toISO()}`,
-            ).then((res) => res.json()),
+        queryFn: () => fetchIntensity(timeRange),
     });
 
     // We don't want anything to be rendered on the server.

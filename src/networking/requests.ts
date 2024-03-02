@@ -1,4 +1,10 @@
+import { DateTime } from "luxon";
 import { z } from "zod";
+
+export type TimeRange = {
+    start: DateTime;
+    end: DateTime;
+};
 
 /** Error shape from the API */
 const IntensityErrorResponseSchema = z.object({
@@ -17,7 +23,7 @@ const IntensityDataPointSchema = z.object({
     to: z.string(),
     intensity: z.object({
         forecast: z.number(),
-        actual: z.number(),
+        actual: z.number().nullable(),
         index: z.string(),
     }),
 });
@@ -37,3 +43,18 @@ const IntensityResponseSchema = z.union([
 ]);
 
 export type IntensityResponse = z.infer<typeof IntensityResponseSchema>;
+
+export const fetchIntensity = async (range: TimeRange): Promise<IntensityResponse> => {
+    const response = await fetch(
+        `https://api.carbonintensity.org.uk/intensity/${range.start.toUTC()}/${range.end.toUTC()}`,
+    );
+
+    const data = await response.json();
+    const parsedResponse = IntensityResponseSchema.safeParse(data);
+
+    if (!parsedResponse.success) {
+        return { error: { message: "Invalid API response", code: "invalid_response" } };
+    }
+
+    return parsedResponse.data;
+}
