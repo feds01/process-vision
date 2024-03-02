@@ -58,13 +58,16 @@ export default function Home() {
                     <TimePicker
                         value={timeRange.end}
                         onChange={(end) => setTimeRange({ ...timeRange, end })}
+                        minDate={timeRange.start}
                     />
                 </div>
                 <div className="flex w-full pt-8">
                     {isPending ? (
                         <Loader />
-                    ) : error || "error" in data ? (
+                    ) : error ? (
                         <Error error={error} />
+                    ) : "error" in data ? (
+                        <Error error={data} />
                     ) : (
                         <Chart data={data} />
                     )}

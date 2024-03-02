@@ -1,12 +1,22 @@
+import { IntensityErrorResponse } from "@/networking/requests";
 import React from "react";
 
 type ErrorProps = {
     /** The error that occurred when performing some operation. */
-    error: Error | null;
+    error: Error | IntensityErrorResponse | null;
 };
 
-const ErrorWrapper = (props: ErrorProps) => {
-    return <div>Error</div>;
+const ErrorWrapper = ({ error }: ErrorProps) => {
+    return (
+        <div>
+            <p>Couldn&apos;t load data</p>
+            {error && error instanceof Error ? (
+                <p>{error.message}</p>
+            ) : (
+                <p>{error?.error.message}</p>
+            )}
+        </div>
+    );
 };
 
 export default ErrorWrapper;
