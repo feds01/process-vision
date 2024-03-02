@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
+import { Roboto } from "next/font/google";
 import { ClientProvider } from "@/components/QueryProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+    weight: "400",
+    subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
     title: "Carbon App",
@@ -18,7 +21,7 @@ export default function RootLayout({
     return (
         <ClientProvider>
             <html lang="en">
-                <body className={inter.className}>{children}</body>
+                <body className={roboto.className}>{children}</body>
             </html>
         </ClientProvider>
     );
