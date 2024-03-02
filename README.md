@@ -1,3 +1,10 @@
+# Carbon Intensity Data visualisation
+
+## Assumptions
+
+- For the date time picker, whilst this doesn't use a custom implementation. However, it is assumed that some kind of UI library would be used to implement a feature like this. I have used `react-datetime-picker` as an example of how this could be implemented. `react-datetime-picker` is a simple and easy to use date time picker that can be used to select a date and time. It is also easy to use and can be customised to fit the needs of the user.
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
