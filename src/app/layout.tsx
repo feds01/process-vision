@@ -9,8 +9,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-    title: "Carbon App",
-    description: "Carbon App",
+    title: "Carbon Intensity App",
+    description: "Visualising the carbon intensity of the UK's electricity grid",
 };
 
 export default function RootLayout({

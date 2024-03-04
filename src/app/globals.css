@@ -19,6 +19,8 @@ body {
         rgb(var(--background-start-rgb));
     height: 100%;
     font-family: "Roboto", sans-serif !important;
+
+    @apply text-primary;
 }
 
 @layer utilities {

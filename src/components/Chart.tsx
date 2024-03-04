@@ -27,6 +27,8 @@ Chart.register(
     Title,
     Tooltip,
 );
+Chart.defaults.color = "#3A5965";
+Chart.defaults.font.family = "Roboto, sans-serif";
 
 type ChartProps = {
     /** The data to render. */
@@ -83,18 +85,12 @@ const ChartRenderer = ({ data, size = 600 }: ChartProps) => {
                         title: {
                             display: true,
                             text: "Time",
-                            font: {
-                                family: "Roboto, sans-serif",
-                            },
                         },
                     },
                     y: {
                         title: {
                             display: true,
                             text: "Carbon intensity",
-                            font: {
-                                family: "Roboto, sans-serif",
-                            },
                         },
                     },
                 },
@@ -102,18 +98,10 @@ const ChartRenderer = ({ data, size = 600 }: ChartProps) => {
                     title: {
                         display: true,
                         text: "Carbon intensity",
-                        font: {
-                            family: "Roboto, sans-serif",
-                        },
                     },
                     legend: {
                         display: true,
                         position: "top",
-                        labels: {
-                            font: {
-                                family: "Roboto, sans-serif",
-                            },
-                        },
                     },
                     tooltip: {
                         callbacks: {
