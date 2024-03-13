@@ -9,11 +9,22 @@ type TimePickerProps = {
     /** The value that is currently selected. */
     value: DateTime;
 
+    /**
+     * Timezone that is selected by the user in order to
+     * shift the time to the correct timezone.
+     */
+    timezone: string;
+
     /** The minimum date that must be selected */
     minDate?: DateTime;
 };
 
-const TimePicker = ({ value, minDate, onChange }: TimePickerProps) => {
+const TimePicker = ({
+    value,
+    timezone,
+    minDate,
+    onChange,
+}: TimePickerProps) => {
     const [time, setTime] = React.useState<DateTime>(value);
 
     useEffect(() => {
@@ -23,7 +34,10 @@ const TimePicker = ({ value, minDate, onChange }: TimePickerProps) => {
     return (
         <DateTimePicker
             disableClock
-            onChange={(value) => value && onChange(DateTime.fromJSDate(value))}
+            onChange={(value) =>
+                value &&
+                onChange(DateTime.fromJSDate(value, { zone: timezone }))
+            }
             value={time.toJSDate()}
             {...(minDate && { minDate: minDate.toJSDate() })}
         />

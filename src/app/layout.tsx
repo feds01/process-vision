@@ -10,7 +10,8 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
     title: "Carbon Intensity App",
-    description: "Visualising the carbon intensity of the UK's electricity grid",
+    description:
+        "Visualising the carbon intensity of the UK's electricity grid",
 };
 
 export default function RootLayout({

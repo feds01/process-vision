@@ -44,7 +44,9 @@ const IntensityResponseSchema = z.union([
 
 export type IntensityResponse = z.infer<typeof IntensityResponseSchema>;
 
-export const fetchIntensity = async (range: TimeRange): Promise<IntensityResponse> => {
+export const fetchIntensity = async (
+    range: TimeRange,
+): Promise<IntensityResponse> => {
     const response = await fetch(
         `https://api.carbonintensity.org.uk/intensity/${range.start.toUTC()}/${range.end.toUTC()}`,
     );
@@ -53,8 +55,13 @@ export const fetchIntensity = async (range: TimeRange): Promise<IntensityRespons
     const parsedResponse = IntensityResponseSchema.safeParse(data);
 
     if (!parsedResponse.success) {
-        return { error: { message: "Invalid API response", code: "invalid_response" } };
+        return {
+            error: {
+                message: "Invalid API response",
+                code: "invalid_response",
+            },
+        };
     }
 
     return parsedResponse.data;
-}
+};

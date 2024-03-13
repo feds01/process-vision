@@ -34,11 +34,17 @@ type ChartProps = {
     /** The data to render. */
     data: IntensityDataResponse;
 
+    /**
+     * Timezone that is selected by the user in order to
+     * shift the time to the correct timezone.
+     */
+    timezone: string;
+
     /** The size of the chart. */
     size?: number;
 };
 
-const ChartRenderer = ({ data, size = 600 }: ChartProps) => {
+const ChartRenderer = ({ data, timezone, size = 600 }: ChartProps) => {
     const ref = React.useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -54,7 +60,9 @@ const ChartRenderer = ({ data, size = 600 }: ChartProps) => {
                 labels: data.data.map((point) =>
                     // NOTE: Ideally, we'd use a time scale here, but it seems awkward to configure in order
                     // to show dates that are human readable when larger time ranges are selected.
-                    DateTime.fromISO(point.from, {zone: 'utc'}).toLocaleString({
+                    DateTime.fromISO(point.from, {
+                        zone: timezone,
+                    }).toLocaleString({
                         weekday: "short",
                         month: "short",
                         day: "2-digit",
@@ -117,7 +125,7 @@ const ChartRenderer = ({ data, size = 600 }: ChartProps) => {
         });
 
         return () => chart.destroy();
-    }, [data]);
+    }, [data, timezone]);
 
     return (
         <div>
